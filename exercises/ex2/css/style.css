@@ -1,0 +1,179 @@
+/* General */
+* {
+    margin: 0;
+    padding: 0;
+    color: #FFF;
+}
+
+header, main, footer, nav, aside, section, div {
+    display: block;
+}
+
+/* Body */
+body {
+    background-color: #171932;
+    font-family: Open Sans, Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+}
+
+/* Header */
+header #logo {
+    text-decoration: none;
+}
+header #logo h1 {
+    padding: 23.5px 0 23.5px 70px;
+    margin: 0 16px;
+    background-image: url(../images/logo.svg);
+    background-repeat: no-repeat; 
+    background-position: 0 50%;
+    font-family: Carter One, Arial, Helvetica, sans-serif;
+}
+header #headerImage img {
+    width: 100%;
+}
+/* Carousel */
+
+header #mainPanel {
+    padding: 16px 0 8px;
+    margin-left: 16px;
+}
+
+header #mainPanel img {
+    margin-right: 20px;
+    vertical-align: middle;
+}
+
+
+/* Main */
+main { 
+    overflow: auto;
+    margin-left: 16px;
+}
+
+main #mainTitle {
+    margin-top: 11px;
+}
+
+main #mainTitle h1 {
+    font-size: 38px;
+    display: inline;
+    line-height: 52px;
+    font-weight: bold;
+}
+
+main #mainTitle span {
+    font-size: 22px;
+    display: inline;
+    font-weight: 300;
+    margin-left: 16px;
+}
+
+/* Tour list */
+main #tourList  {
+    display: inline;
+    
+}
+
+main #tourList .tourItem {
+    width: 270px;
+    background-color: #9B51E0;
+    overflow: auto;
+    display: inline-block;
+    border-radius: 5px;
+    box-shadow: 0px 0px 7px rgba(255, 255, 255, 0.3);
+    margin: 18px 16px 0 0;
+    font-size: 16px;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+main #tourList .tourItem a {
+    text-decoration: none;
+}
+
+main #tourList .tourItem .tourBottom {
+    padding: 10px;
+}
+main #tourList .tourItem .tourBottom  .title {
+    line-height: 19px;
+}
+main #tourList .tourItem .tourBottom a {
+    vertical-align: middle;
+}
+main #tourList .tourItem .tourBottom .icon-link:nth-of-type(2){
+    margin: 0 3px 0 16px;
+}
+main #tourList .tourItem .tourBottom .icon-link:nth-of-type(3){
+    margin: 0 3px;
+}
+main #tourList .tourItem .tourBottom .icon-link:nth-of-type(4){
+    margin: 0 3px;
+}
+main #tourList .tourItem .tourBottom .icon-link:nth-of-type(5){
+    margin: 0 0 0 10px;
+}
+
+/* Section nav bar */
+main #mainSectionNavBar {
+    margin-top: 23px;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+main #mainSectionNavBar a{
+    border-left: 1px solid #FFF;
+    padding: 0 8px;
+    text-decoration: none;
+    font-size: 28px;
+}
+main #mainSectionNavBar a:first-of-type {
+    padding: 0;
+    border: none;
+}
+/* mainDescriptionContent */
+main #mainDescriptionContent .descriptionComponent{
+    max-width: 380px;
+    margin: 30px 0;
+    overflow: auto;
+}
+main #mainDescriptionContent .descriptionComponent:nth-of-type(n+3) {
+    margin: 70px 0;
+}
+main #mainDescriptionContent .descriptionComponent p {
+    line-height: 19px;
+    font-size: 14px;
+}
+main #mainDescriptionContent .descriptionComponent h2 {
+    margin-bottom: 16px;
+    line-height: 41px;
+    font-size: 30px;
+    font-family: Open Sans;
+    font-weight: bold;
+}
+/* List icon */
+main #mainCarList {
+    margin-top: 20px;
+    list-style-type: none;
+}
+main #mainCarList li{
+    padding: 8px 0 0px 70px;
+    background-repeat: no-repeat; 
+    background-position: 0 50%;
+    height: 48px;
+    background-image: url(../images/car.svg);
+    font-size: 14px;
+    line-height: 40px;
+}
+/* For footer */
+main {
+    margin-bottom: 48px; 
+}
+/* Footer */
+footer {
+    position: fixed;
+    bottom: 0;
+    background-color: #9B51E0;
+    width: 100%;
+    padding: 14.5px 16px;
+}
+
+footer #socialBar a {
+    margin-right: 20px;
+}

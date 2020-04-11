@@ -1,0 +1,43 @@
+.icon {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50% 50%;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+}
+.icon.icon-trans-50 {
+    opacity: 50%;
+}
+.icon.icon-rocket {
+    background-image: url(../images/rocket.svg);
+    width: 13px;
+    height: 19px;
+}
+.icon.icon-store {
+    background-image: url(../images/store.svg);
+    width: 19px;
+    height: 19px;
+}
+.icon.icon-cloud {
+    background-image: url(../images/cloud.svg);
+    width: 31px;
+    height: 19px;
+}
+.icon.icon-settings {
+    background-image: url(../images/settings.svg);
+    width: 19px;
+    height: 19px;
+}
+.icon.icon-twitter {
+    background-image: url(../images/twitter.svg);
+}
+.icon.icon-facebook {
+    background-image: url(../images/facebook.svg);
+}
+.icon.icon-gplus {
+    background-image: url(../images/google.svg);
+}
+.icon.icon-linkedin {
+    background-image: url(../images/linkedin.svg);
+}
