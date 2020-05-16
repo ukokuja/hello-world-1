@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+header, main, footer, nav, aside, section, div {
+    display: block;
+}
+
+
+form input[type="password"]  {
+    max-width: 100%;
+    font-size: 20px;
+    text-align: center;
+}
+form input[type="password"].bug {
+    color: red;
+}
+.container {
+    max-width: 600px;
+}
+
+.container .col-sm {
+    padding: 0;
+}
+
+
+main h2 {
+    text-align: center;
+    margin: 10px;
+}
