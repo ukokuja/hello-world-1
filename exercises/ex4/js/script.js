@@ -1,5 +1,5 @@
 function init () {
-    var container = document.getElementsByClassName('container')[0];
+    var container = document.getElementById('secondGroup').getElementsByClassName('container')[0];
     for (var i = 0; i < 20; i++) {
         var row = document.createElement('div');
         row.className += 'row'
@@ -9,6 +9,7 @@ function init () {
             row.appendChild(input);
         }
     }
+    addValidation();
 }
 
 function getInput (i, j) {
@@ -24,6 +25,7 @@ function getInput (i, j) {
 
 function initGame() {
     var game = {
+        previous: getPrevious(),
         direction: 2,
         x: 10,
         y: 10,
@@ -34,7 +36,9 @@ function initGame() {
         isAlive: true,
         speed: 1,
         controls: {
-            level: document.getElementById('level')
+            speed: document.getElementById('speed'),
+            level: document.getElementById('level'),
+            timer: document.getElementById('timer')
         },
         time: 0
     }
@@ -53,9 +57,9 @@ function initGame() {
             }
             renderGame(game);
         }
-        
         game.time++
-    }, 50)
+        updateTimer(game);
+    }, 25)
 }
 
 function doGame (game) {
@@ -68,12 +72,14 @@ function doGame (game) {
     } else {
         game.x = game.x - 1 < 0 ? game.limitX - 1 : game.x - 1;
     }
-    if (!isLost(game)) {
-        game.isAlive = false
+    if (isLost(game)) {
         doLost();
+        game.isAlive = false
+        scrollEnd(game)
     }
     if (isWin(game)) {
         doWin();
+        scrollEnd(game)
     }
     return game;
 
@@ -104,6 +110,7 @@ function renderGame (game) {
         if (game.list.length % 2 == 0) {
             game.speed++;
             updateSpeed(game);
+            updateLevel(game);
         }
     } else {
         var tail = game.list.pop()
@@ -121,43 +128,134 @@ function setArrowInteractions (game) {
         e = ev || window.event;
         if (e.keyCode == '40') {
             game.direction = game.direction == 3 ? 3 : 1;
+            e.preventDefault();
         }
         else if (e.keyCode == '38') {
             game.direction = game.direction == 1 ? 1 : 3;
+            e.preventDefault();
         }
         else if (e.keyCode == '37') {
             game.direction = game.direction == 2 ? 2 : 4;
+            e.preventDefault();
         }
         else if (e.keyCode == '39') {
             game.direction = game.direction == 4 ? 4 : 2;
+            e.preventDefault();
         }
+        
     })
 
-    game.controls.level.addEventListener('change', function () {
-        game.speed = parseInt(parseInt(game.controls.level.value) / 10)
+    game.controls.speed.addEventListener('change', function () {
+        game.speed = parseInt(parseInt(game.controls.speed.value) / 10)
     })
+
+    $("#startPlay").click(function() {
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $("#secondGroup").offset().top
+        }, 1000);
+    });
 }
 
 function isWin (game) {
-    return game.list.length >= 15
+    var isWin = true
+    saveSession(game, isWin);
+    return game.list.length >= 100
 }
 function doLost() {
-    alert('You have lost');
+    console.log('You have lost');
 }
 function doWin() {
-    alert('You have won');
+    console.log('You have won');
 }
 
 function isLost (game) {
     for (var i in game.list) {
-        if (game.list[i] == document.querySelector("input[x='"+game.x+"'][y='"+game.y+"']")) {
-            return false
+        
+        if (game.list[i].getAttribute('x') == game.x && game.list[i].getAttribute('y') == game.y) {
+            var isWin = false
+            saveSession(game, isWin);
+            return true
         }
     }
-    return true
+    return false
 }
 
 function updateSpeed(game) {
-    var level = parseInt(game.speed * 10)
-    game.controls.level.value = level > 100 ? 100 : level
+    var speed = parseInt(game.speed * 10)
+    game.controls.speed.value = speed > 100 ? 100 : speed
+}
+
+function updateLevel(game) {
+    var level = 1 + parseInt((parseInt(game.list.length) - 5)/3)
+    game.controls.level.value = level
+}
+
+function updateTimer (game) {
+    if (game.time % 40 == 0) {
+        game.controls.timer.value = game.time / 40
+    }
+}
+
+function saveSession(game, isWin) {
+    game.previous.push({
+        list: game.list.length,
+        isWon: isWin,
+        speed: game.speed,
+        time: game.time
+    })
+    localStorage.setItem('snakeShenar', JSON.stringify(game.previous))
+}
+
+function getPrevious () {
+    try {
+        var previous = localStorage.getItem('snakeShenkar');
+        if (!previous) return []
+        return JSON.parse(previous);
+    } catch {
+        return []
+    }
+    return [];
+}
+
+function scrollEnd (game) {
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $("#finalGroup").offset().top
+    }, 1000);
+    $("#finalMessage").html(game.list.length + " in " + parseInt(game.time/40) + " seconds!!!!")
+}
+
+
+function addValidation () {
+        window.addEventListener('load', function() {
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.getElementsByClassName('needs-validation');
+          // Loop over them and prevent submission
+          var validation = Array.prototype.filter.call(forms, function(form) {
+            for (var i = 0; i < form.length; i++) {
+                form[i].oninvalid = function (e){
+                    e.target.className = e.target.className.replace(/\bis-invalid\b/,'');
+                    e.target.className = e.target.className.replace(/\bis-valid\b/,'');
+                    e.target.className += ' is-invalid'
+                }
+                form[i].onkeydown = function (e){
+                    e.target.className = e.target.className.replace(/\bis-invalid\b/,'');
+                    e.target.className = e.target.className.replace(/\bis-valid\b/,'');
+                }
+
+                form[i].onblur = function (e){
+                    e.target.className = e.target.className.replace(/\bis-invalid\b/,'');
+                    e.target.className = e.target.className.replace(/\bis-valid\b/,'');
+                    e.target.checkValidity();
+                    e.target.parentNode.classList.add('was-validated');
+                }
+            }
+            form.addEventListener('submit', function(event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+        }, false);
 }
