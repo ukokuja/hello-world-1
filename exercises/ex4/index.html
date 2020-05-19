@@ -17,7 +17,7 @@
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                           <label for="validationCustom01">Full name</label>
-                          <input type="text" pattern="^[a-zA-Z ]+" class="form-control" name="fullName" id="validationCustom01" placeholder="Ex: Jesse Pinkman" required>
+                          <input type="text" pattern="((\s+)?\w+\s+\w+\s?)+" class="form-control" name="fullName" id="validationCustom01" placeholder="Ex: Jesse Pinkman" required>
                           <div class="invalid-feedback">
                             Only chars are valid!
                           </div>
@@ -126,6 +126,11 @@
                                     <input class="form-control" name="temper" id="timer" type="text" readonly>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12 mb-12">
+                                    <button type="button" id="finishPlay" class="btn btn-primary btn-lg">Continue</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -135,9 +140,9 @@
                         <div class="col-md-4 mb-3">
                             <label for="password">Password</label>
                             <div class="input-group">
-                              <input type="password" class="form-control" name="pass" id="password" placeholder="password" aria-describedby="inputGroupPrepend" required>
+                              <input type="password" pattern="^[a-zA-Z]{6,10}" class="form-control" name="pass" id="password" placeholder="password" aria-describedby="inputGroupPrepend" required>
                               <div class="invalid-feedback">
-                                Only numbers
+                                Only 6 to 10 chars
                               </div>
                             </div>
                         </div>

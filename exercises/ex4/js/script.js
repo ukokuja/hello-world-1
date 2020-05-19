@@ -82,6 +82,11 @@ function initGame(difficulty, colors) {
         game.time++
         updateTimer(game);
     }, 25)
+    $("#finishPlay").click(function() {
+        doLost();
+        game.isAlive = false
+        scrollEnd(game)
+    });
 }
 
 function doGame (game) {
