@@ -1,56 +1,78 @@
 function init () {
-    var container = document.getElementById('secondGroup').getElementsByClassName('container')[0];
-    for (var i = 0; i < 20; i++) {
-        var row = document.createElement('div');
-        row.className += 'row'
-        container.appendChild(row);
-        for (var j = 0; j < 20; j++) {
-            var input = getInput(i, j);
-            row.appendChild(input);
-        }
-    }
     addValidation();
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $("#firstGroup").offset().top
+    }, 1000);
+    $("#startPlay").click(function() {
+        if (isMainPartValidate()) {
+            initGame($('input[name="gender"]:checked').val(), $('#colorSelect option:selected').val());
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#secondGroup").offset().top
+            }, 1000);
+        }
+    });
 }
 
 function getInput (i, j) {
     var container = document.createElement('div');
-    container.className += 'col-sm'
-    var input = document.createElement('input');
-    input.setAttribute('type', 'password');
+    container.className += 'col-sm col-xs col-sm col-lg'
+    var input = document.createElement('div');
     input.setAttribute('y', i);
     input.setAttribute('x', j);
     container.appendChild(input)
     return container
 }
 
-function initGame() {
+function addBoard (limit, difficulty) {
+    var container = document.getElementById('secondGroup').getElementsByClassName('container')[0];
+    container.className += ' ' + difficulty;
+    for (var i = 0; i < limit; i++) {
+        var row = document.createElement('div');
+        row.className += 'row'
+        container.appendChild(row);
+        for (var j = 0; j < limit; j++) {
+            var input = getInput(i, j);
+            row.appendChild(input);
+        }
+    }
+}
+function initGame(difficulty, colors) {
+    limit = 20;
+    if (difficulty == 'easy') {
+        limit = 10;
+    } else if (difficulty == 'medium') {
+        limit = 15;
+    }
+    addBoard(limit, difficulty)
     var game = {
         previous: getPrevious(),
         direction: 2,
-        x: 10,
-        y: 10,
-        limitX: 20,
-        limitY: 20,
+        x: 3,
+        y: 3,
+        limitX: limit,
+        limitY: limit,
         list: [],
-        bug: getBug(),
+        bug: getBug(limit),
         isAlive: true,
-        speed: 1,
+        speed: 10,
         controls: {
             speed: document.getElementById('speed'),
             level: document.getElementById('level'),
             timer: document.getElementById('timer')
         },
-        time: 0
+        time: 0,
+        colors: colors.split(',')
     }
     setArrowInteractions(game);
-    for (var i = game.x - 5; i < game.x; i++ ) {
-        var ele = document.querySelector("input[x='"+(i)+"'][y='"+game.y+"']")
-        ele.value = 1
-        game.list.push(ele)
+    for (var i = game.x - 3; i < game.x; i++ ) {
+        var ele = document.querySelector("div[x='"+(i)+"'][y='"+game.y+"']")
+        ele.className = '   current-' + game.colors[i % game.colors.length]
+        game.list.push(ele);
     }
+    game.x++;
     setBug(game);
     interval = setInterval(function (){
-        if (game.speed == 10 || game.time % (10 - (game.speed)) == 0) {
+        if (game.speed == 20 || game.time % (20 - (game.speed)) == 0) {
             game = doGame(game);
             if (!game.isAlive) {
                 clearInterval(interval);
@@ -84,40 +106,45 @@ function doGame (game) {
     return game;
 
 }
-function getBug () {
-    var x = Math.floor(Math.random() * 19);
-    var y = Math.floor(Math.random() * 19);
+function getBug (limit) {
+    var x = Math.floor(Math.random() * (limit - 1));
+    var y = Math.floor(Math.random() * (limit - 1));
+    element = document.querySelector("div[x='"+x+"'][y='"+y+"']")
+    while (!element || element.className.indexOf('current') > -1) {
+        x = Math.floor(Math.random() * (limit - 1));
+        y = Math.floor(Math.random() * (limit - 1));
+        console.log(x, y, element.className)
+        element = document.querySelector("div[x='"+x+"'][y='"+y+"']")
+    }
     return {
         x: x,
         y: y,
-        element: document.querySelector("input[x='"+x+"'][y='"+y+"']")
+        element: element
     }
 }
 function setBug(game) {
-    game.bug.element.value = 1
     game.bug.element.className = 'bug'
 }
 function resetBug(game) {
-    game.bug.element.value = ''
     game.bug.element.className = ''
-    game.bug = getBug()
+    game.bug = getBug(game.limitX)
 }
 
 function renderGame (game) {
     if (game.x == game.bug.x && game.y == game.bug.y) {
         resetBug(game);
         setBug(game)
-        if (game.list.length % 2 == 0) {
+        if (game.list.length % 3 == 0) {
             game.speed++;
             updateSpeed(game);
             updateLevel(game);
         }
     } else {
         var tail = game.list.pop()
-        tail.value = null
+        tail.className = ''
     }
-    var head = document.querySelector("input[x='"+game.x+"'][y='"+game.y+"']")
-    head.value = 1
+    var head = document.querySelector("div[x='"+game.x+"'][y='"+game.y+"']")
+    head.className = '   current-' + game.colors[game.x % game.colors.length]
     game.list.unshift(head)
 }
 
@@ -146,14 +173,8 @@ function setArrowInteractions (game) {
     })
 
     game.controls.speed.addEventListener('change', function () {
-        game.speed = parseInt(parseInt(game.controls.speed.value) / 10)
+        game.speed = parseInt(parseInt(game.controls.speed.value))
     })
-
-    $("#startPlay").click(function() {
-        $([document.documentElement, document.body]).animate({
-            scrollTop: $("#secondGroup").offset().top
-        }, 1000);
-    });
 }
 
 function isWin (game) {
@@ -181,8 +202,8 @@ function isLost (game) {
 }
 
 function updateSpeed(game) {
-    var speed = parseInt(game.speed * 10)
-    game.controls.speed.value = speed > 100 ? 100 : speed
+    var speed = parseInt(game.speed)
+    game.controls.speed.value = speed > 20 ? 20 : speed
 }
 
 function updateLevel(game) {
@@ -224,6 +245,16 @@ function scrollEnd (game) {
     $("#finalMessage").html(game.list.length + " in " + parseInt(game.time/40) + " seconds!!!!")
 }
 
+function isMainPartValidate () {
+    var isValid = true;
+    var inputs = document.getElementById('firstGroup').getElementsByTagName('input')
+    Array.prototype.filter.call(inputs, function(input) {
+        if (!input.checkValidity()) {
+            isValid = false
+        }
+    })
+    return isValid
+}
 
 function addValidation () {
         window.addEventListener('load', function() {

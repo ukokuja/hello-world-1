@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Password generator</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <link rel="stylesheet" href=""> -->
+    </head>
+    <body>
+        <main>
+            <form action="/password" method="GET">
+                <label for="number">Number of chars</label>
+                <select id="number" name="number">
+                    <option value="6">6</option>
+                    <option value="6">7</option>
+                    <option value="6">8</option>
+                    <option value="6">9</option>
+                    <option value="6">10</option>
+                </select>
+                <br>
+                <label for="caps">Include capital letters</label>
+                <input type="checkbox" name="caps" id="caps">
+                <br>
+                <label for="special">Include special chars</label>
+                <input type="checkbox" name="special" id="special">
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+        </main>
+        <!-- <script src="" async defer></script> -->
+    </body>
+</html>

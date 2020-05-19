@@ -6,11 +6,8 @@
 header, main, footer, nav, aside, section, div {
     display: block;
 }
-
-main {
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
+body {
+    overflow: hidden;
 }
 form input[type="password"]  {
     max-width: 100%;
@@ -39,4 +36,76 @@ main h2 {
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
+}
+
+
+div[y][x] {
+    width: 29px;
+    height: 26px;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+}
+#secondGroup > .container:first-of-type .row .col-sm:last-of-type div {
+    border-right: none;
+}
+
+#secondGroup > .container:first-of-type .row:last-of-type .col-sm div {
+    border-bottom: none;
+}
+
+#secondGroup > .container:first-of-type {
+    border: 1px solid;
+}
+
+div[y][x].current-red {
+    background-color: red;
+}
+
+div[y][x].current-orange {
+    background-color: orange;
+}
+
+div[y][x].current-yellow {
+    background-color: yellow;
+}
+div[y][x].current-green {
+    background-color: green;
+}
+div[y][x].current-blue {
+    background-color: blue;
+}
+div[y][x].current-indigo {
+    background-color: indigo;
+}
+div[y][x].current-violet {
+    background-color: violet;
+}
+div[y][x].current-black {
+    background-color: black;
+}
+
+
+div[y][x].bug {
+    background-color: red;
+}
+
+
+.container.easy{
+    max-width: 292px;
+}
+
+.container.medium {
+    max-width: 433px;
+}
+
+#firstGroup section:first-child {
+    display: inline;
+    text-align: center;
+    margin: 40px
+}
+#firstGroup > section:first-child img {
+    width: 30px;
+}
+#firstGroup > section:first-child h2 {
+    display: inline;
 }
