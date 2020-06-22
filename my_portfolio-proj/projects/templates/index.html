@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta charset="UTF-8">
+        <link href="{% static "projects/css/style.css" %}" type="text/css">
+		<title>Projects</title>
+
+	</head>
+	<body>
+        <header>Logo goes here</header>
+        <nav>
+            <ul>
+                <li><a href="#">Projects</a></li>
+                <li><a href="blog">Lucas' blog</a></li>
+            </ul>
+        </nav>
+        <h1>Lucas Kujawski - Portfolio</h1>
+        {% for project in projects %}
+        <section id={{project.id}}>
+            <img src="{{project.imgUrl.url}}" alt="{{project.title}}" title="{{project.title}}">
+            <h2>{{project.title}}</h2>
+            <p>{{project.desc}}</p>
+
+            {% if project.url %}
+            <a href="{{project.url}}" target="_blank">Click for video about {{project.title}}</a>
+            {% endif %}
+        {% endfor %}
+        </section>
+	</body>
+</html> 
